@@ -12,7 +12,7 @@ public class KeywordArticleExpression implements ArticleExpression {
    * @param keyword keyword for presence of which the Article would be tested.
    */
   public KeywordArticleExpression(String keyword) {
-    this.keyword = keyword;
+    this.keyword = keyword.toLowerCase();
   }
 
   /**
@@ -24,9 +24,9 @@ public class KeywordArticleExpression implements ArticleExpression {
    */
   @Override
   public boolean test(Article article) {
-    return article.getDescription().toLowerCase().contains(keyword.toLowerCase())
-           || article.getTitle().toLowerCase().contains(keyword.toLowerCase())
-           || article.getPublishedAt().toString().toLowerCase().contains(keyword.toLowerCase())
-           || article.getUrl().toString().toLowerCase().contains(keyword.toLowerCase());
+    return article.getDescription().toLowerCase().contains(keyword)
+           || article.getTitle().toLowerCase().contains(keyword)
+           || article.getPublishedAt().toString().toLowerCase().contains(keyword)
+           || article.getUrl().toString().toLowerCase().contains(keyword);
   }
 }
