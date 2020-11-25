@@ -1,13 +1,6 @@
 package edu.calpoly.csc305.newsextractor;
 
-import edu.calpoly.csc305.newsextractor.Article;
-import edu.calpoly.csc305.newsextractor.ArticleExpression;
-import edu.calpoly.csc305.newsextractor.FilteringNewsProcessor;
-import edu.calpoly.csc305.newsextractor.GeneralArticle;
-import edu.calpoly.csc305.newsextractor.KeywordArticleExpression;
-import edu.calpoly.csc305.newsextractor.NewsProcessor;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -15,8 +8,11 @@ import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.LinkedList;
 import java.util.List;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
+
 
 
 /**

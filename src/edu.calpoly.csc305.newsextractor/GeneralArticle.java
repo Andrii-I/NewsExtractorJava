@@ -72,4 +72,26 @@ public class GeneralArticle implements Article {
     return this.url;
   }
 
+  /**
+   * General Articles' equality is based on equality of values of fields.
+   *
+   * @param o what we compare this to
+   * @return boolean, if equals
+   */
+  @Override
+  public boolean equals(Object o) {
+    if (o == this) {
+      return true;
+    }
+    if (!(o instanceof GeneralArticle)) {
+      return false;
+    }
+    GeneralArticle article = (GeneralArticle)o;
+
+    return this.getDescription().equals(article.getDescription()) &&
+      this.getPublishedAt().equals(article.getPublishedAt()) &&
+      this.getTitle().equals(article.getTitle()) &&
+      this.getUrl().toString().equals(article.getUrl().toString());
+  }
+
 }
