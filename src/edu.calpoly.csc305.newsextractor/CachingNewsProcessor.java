@@ -51,7 +51,6 @@ public class CachingNewsProcessor implements NewsProcessor {
       }
     }
     for (int i = 0; i < cache.size(); i++) {
-      System.out.println();
       if (cache.get(i).getPublishedAt().isBefore(earliestInBatch)) {
         cache.remove(i);
       }
