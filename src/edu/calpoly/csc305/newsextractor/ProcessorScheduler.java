@@ -30,6 +30,8 @@ public class ProcessorScheduler implements Runnable {
    * thread.
    * The general contract of the method {@code run} is that it may
    * take any action whatsoever.
+   * Comment: I used "Thread.currentThread().interrupt();" because there is no more critical
+   * section after the interruption and also because SonarLint suggested it.
    *
    * @see Thread#run()
    */
