@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.BlockingQueue;
 import java.util.logging.Logger;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -18,6 +19,7 @@ import org.antlr.v4.runtime.tree.ParseTree;
 public class NewsConfigParser implements ConfigParser {
   private final String configFilePath;
   private final Logger logger;
+  private final BlockingQueue<Article> queue;
 
   /**
    * Creates an instance of NewsConfigParser.
@@ -25,9 +27,10 @@ public class NewsConfigParser implements ConfigParser {
    * @param configFilePath path to config file relative to project root folder.
    * @param logger         Logger for logging.
    */
-  public NewsConfigParser(String configFilePath, Logger logger) {
+  public NewsConfigParser(String configFilePath, Logger logger, BlockingQueue<Article> queue) {
     this.configFilePath = configFilePath;
     this.logger = logger;
+    this.queue = queue;
   }
 
   /**
@@ -36,10 +39,10 @@ public class NewsConfigParser implements ConfigParser {
    * @return List of Processors.
    */
   @Override
-  public List<NewsProcessor> getProcessors() {
+  public List<ProcessorScheduler> getProcessors() {
     Optional<ParseTree> parseTree = parseFile(configFilePath, logger);
     if (parseTree.isPresent()) {
-      return parseTree.get().accept(new AggregatorProcessorListVisitor(logger));
+      return parseTree.get().accept(new AggregatorProcessorListVisitor(logger, queue));
     }
     return new LinkedList<>();
   }

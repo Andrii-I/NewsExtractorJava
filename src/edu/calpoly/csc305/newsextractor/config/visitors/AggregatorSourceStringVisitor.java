@@ -17,4 +17,15 @@ public class AggregatorSourceStringVisitor extends AggregatorConfigParserBaseVis
   public String visitSource(AggregatorConfigParser.SourceContext ctx) {
     return ctx.LINE().toString().trim();
   }
+
+  /**
+   * Visit a parse tree produced by {@link AggregatorConfigParser#delay}.
+   *
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  @Override
+  public String visitDelay(AggregatorConfigParser.DelayContext ctx) {
+    return ctx.NUM().toString().trim();
+  }
 }

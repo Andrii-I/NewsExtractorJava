@@ -1,11 +1,14 @@
 package edu.calpoly.csc305.newsextractor.config.visitors;
 
+import edu.calpoly.csc305.newsextractor.Article;
 import edu.calpoly.csc305.newsextractor.NewsProcessor;
+import edu.calpoly.csc305.newsextractor.ProcessorScheduler;
 import edu.calpoly.csc305.newsextractor.config.grammars.AggregatorConfigParser;
 import edu.calpoly.csc305.newsextractor.config.grammars.AggregatorConfigParserBaseVisitor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.BlockingQueue;
 import java.util.logging.Logger;
 
 
@@ -13,11 +16,13 @@ import java.util.logging.Logger;
  * Extracts list of NewsProcessors.
  */
 public class AggregatorProcessorListVisitor
-    extends AggregatorConfigParserBaseVisitor<List<NewsProcessor>> {
+    extends AggregatorConfigParserBaseVisitor<List<ProcessorScheduler>> {
   private final Logger logger;
+  private final BlockingQueue<Article> queue;
 
-  public AggregatorProcessorListVisitor(Logger logger) {
+  public AggregatorProcessorListVisitor(Logger logger, BlockingQueue<Article> queue) {
     this.logger = logger;
+    this.queue = queue;
   }
 
   /**
@@ -27,12 +32,12 @@ public class AggregatorProcessorListVisitor
    * @return the visitor result
    */
   @Override
-  public List<NewsProcessor> visitSources(AggregatorConfigParser.SourcesContext ctx) {
-    List<NewsProcessor> sourceNames = new ArrayList<>();
+  public List<ProcessorScheduler> visitSources(AggregatorConfigParser.SourcesContext ctx) {
+    List<ProcessorScheduler> sourceNames = new ArrayList<>();
 
     for (AggregatorConfigParser.SourceTypeContext sourceType : ctx.sourceType()) {
-      Optional<NewsProcessor> article =
-          sourceType.accept(new AggregatorProcessorVisitor(logger));
+      Optional<ProcessorScheduler> article =
+          sourceType.accept(new AggregatorProcessorVisitor(logger, queue));
       article.ifPresent(sourceNames::add);
     }
 

@@ -12,5 +12,5 @@ public interface ConfigParser {
    *
    * @return List of Processors.
    */
-  List<NewsProcessor> getProcessors();
+  List<ProcessorScheduler> getProcessors();
 }

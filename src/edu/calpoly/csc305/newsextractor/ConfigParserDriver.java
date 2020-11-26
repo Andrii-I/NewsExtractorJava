@@ -2,44 +2,22 @@ package edu.calpoly.csc305.newsextractor;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.logging.Logger;
 
 /**
  * Drives NewsConfigParser.
  */
 public class ConfigParserDriver {
-  /**
-   * Prints Articles in format defined by the specification.
-   *
-   * @param articles List of Articles to be printed.
-   */
-  private static void printArticles(List<Article> articles) {
-    if (articles.isEmpty()) {
-      return;
-    }
-
-    StringBuilder str = new StringBuilder();
-    for (Article article : articles) {
-      str.append(article.getTitle()).append("\n").append(article.getDescription()).append("\n")
-        .append(article.getPublishedAt().toString()).append("\n")
-        .append(article.getUrl().toString()).append("\n\n");
-    }
-
-    System.out.println(str.toString());
-  }
-
-  private static List<NewsProcessor> extractProcessors(String configFile, Logger logger) {
-    ConfigParser configParser = new NewsConfigParser(configFile, logger);
+  private static List<ProcessorScheduler> extractProcessors(String configFile, Logger logger,
+                                                       BlockingQueue<Article> queue) {
+    ConfigParser configParser = new NewsConfigParser(configFile, logger, queue);
     return new LinkedList<>(configParser.getProcessors());
   }
 
-  private static List<Article> extractArticles(List<NewsProcessor> processors) {
-    List<Article> articles = new LinkedList<>();
-    for (NewsProcessor processor : processors) {
-      articles.addAll(processor.getArticles());
-    }
-    return articles;
-  }
 
   /**
    * Accepts paths to config files as arguments, extracts Articles from config files, and prints
@@ -48,15 +26,20 @@ public class ConfigParserDriver {
    * @param  args  paths to config files from project root folder.
    */
   public static void main(String[] args) {
-
+    BlockingQueue<Article> blockingQueue = new LinkedBlockingQueue<>();
     Logger logger = Logger.getLogger(ConfigParserDriver.class.getName() + ".configParserDriver");
-    List<NewsProcessor> processors = new LinkedList<>();
+    List<ProcessorScheduler> processorsSchedulers = new LinkedList<>();
 
     for (String configFile : args) {
-      processors.addAll(extractProcessors(configFile, logger));
+      processorsSchedulers.addAll(extractProcessors(configFile, logger, blockingQueue));
     }
-    List<Article> articles = extractArticles(processors);
-    printArticles(articles);
+
+    ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(
+      Runtime.getRuntime().availableProcessors() * 10);
+
+
+
+    new Thread(new ArticlePrinter(blockingQueue, logger)).start();
   }
 
 

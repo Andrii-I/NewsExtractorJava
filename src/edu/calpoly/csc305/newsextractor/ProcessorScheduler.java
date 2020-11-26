@@ -1,12 +1,13 @@
 package edu.calpoly.csc305.newsextractor;
 
+import java.util.Optional;
 import java.util.concurrent.BlockingQueue;
 
 /**
  * Runnable Processor Scheduler class for scheduling Articles extraction with delay.
  */
 public class ProcessorScheduler implements Runnable {
-  private final Integer delay;
+  private final Optional<Integer> delay;
   private final NewsProcessor processor;
   private final BlockingQueue<Article> queue;
 
@@ -17,7 +18,8 @@ public class ProcessorScheduler implements Runnable {
    * @param queue BlockingQueue to add extracted Articles to
    * @param delay delay between Article extraction runs
    */
-  public ProcessorScheduler(NewsProcessor processor, BlockingQueue<Article> queue, int delay) {
+  public ProcessorScheduler(NewsProcessor processor, BlockingQueue<Article> queue,
+                            Optional<Integer> delay) {
     this.processor = processor;
     this.queue = queue;
     this.delay = delay;
@@ -30,8 +32,10 @@ public class ProcessorScheduler implements Runnable {
    * thread.
    * The general contract of the method {@code run} is that it may
    * take any action whatsoever.
-   * Comment: I used "Thread.currentThread().interrupt();" because there is no more critical
-   * section after the interruption and also because SonarLint suggested it.
+   * Comment: I used "Thread.currentThread().interrupt();" because there is no critical
+   * section after the interruption and the function will terminate naturally; also because
+   * SonarLint suggested it. Also I have spent some time researching online and this way is
+   * considered appropriate accordingly to it.
    *
    * @see Thread#run()
    */
@@ -52,7 +56,7 @@ public class ProcessorScheduler implements Runnable {
    *
    * @return Integer signifying execution in seconds
    */
-  public Integer getDelay() {
+  public Optional<Integer> getDelay() {
     return this.delay;
   }
 }
