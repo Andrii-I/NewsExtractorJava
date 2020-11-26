@@ -1,13 +1,12 @@
 package edu.calpoly.csc305.newsextractor;
 
-import java.util.Optional;
 import java.util.concurrent.BlockingQueue;
 
 /**
  * Runnable Processor Scheduler class for scheduling Articles extraction with delay.
  */
 public class ProcessorScheduler implements Runnable {
-  private final Optional<Integer> delay;
+  private final Integer delay;
   private final NewsProcessor processor;
   private final BlockingQueue<Article> queue;
 
@@ -19,7 +18,7 @@ public class ProcessorScheduler implements Runnable {
    * @param delay delay between Article extraction runs
    */
   public ProcessorScheduler(NewsProcessor processor, BlockingQueue<Article> queue,
-                            Optional<Integer> delay) {
+                            Integer delay) {
     this.processor = processor;
     this.queue = queue;
     this.delay = delay;
@@ -56,7 +55,7 @@ public class ProcessorScheduler implements Runnable {
    *
    * @return Integer signifying execution in seconds
    */
-  public Optional<Integer> getDelay() {
+  public Integer getDelay() {
     return this.delay;
   }
 }

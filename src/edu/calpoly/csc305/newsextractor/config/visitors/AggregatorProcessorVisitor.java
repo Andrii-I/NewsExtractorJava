@@ -49,9 +49,9 @@ public class AggregatorProcessorVisitor
         new FileNewsSource(ctx.source().accept(new AggregatorSourceStringVisitor()));
     NewsParser parser = ctx.format().accept(new AggregatorNewsParserVisitor());
     Optional<ArticleExpression> expression = ctx.filter().accept(new AggregatorFilterVisitor());
-    Optional<Integer> delay = Optional.empty();
+    Integer delay = 0;
     if (ctx.delay() != null) {
-      delay = Optional.of(Integer.valueOf(ctx.delay().accept(new AggregatorSourceStringVisitor())));
+      delay = Integer.parseInt(ctx.delay().accept(new AggregatorSourceStringVisitor()));
     }
 
     if (expression.isPresent()) {
@@ -87,9 +87,9 @@ public class AggregatorProcessorVisitor
     } catch (MalformedURLException e) {
       logger.warning(e.getClass().getSimpleName());
     }
-    Optional<Integer> delay = Optional.empty();
+    Integer delay = 0;
     if (ctx.delay() != null) {
-      delay = Optional.of(Integer.valueOf(ctx.delay().accept(new AggregatorSourceStringVisitor())));
+      delay = Integer.valueOf(ctx.delay().accept(new AggregatorSourceStringVisitor()));
     }
     NewsParser parser = ctx.format().accept(new AggregatorNewsParserVisitor());
     Optional<ArticleExpression> expression = ctx.filter().accept(new AggregatorFilterVisitor());
