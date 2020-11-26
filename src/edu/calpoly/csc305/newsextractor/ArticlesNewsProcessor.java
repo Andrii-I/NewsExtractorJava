@@ -53,9 +53,18 @@ public class ArticlesNewsProcessor implements NewsProcessor {
   /**
    * Parser getter.
    *
-   * @return parser.1
+   * @return parser.
    */
   public NewsParser getParser() {
     return this.parser;
+  }
+
+  /**
+   * Logger getter.
+   *
+   * @return logger.
+   */
+  public Logger getLogger() {
+    return this.logger;
   }
 }

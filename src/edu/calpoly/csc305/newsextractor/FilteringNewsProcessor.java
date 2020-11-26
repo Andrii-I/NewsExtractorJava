@@ -1,6 +1,7 @@
 package edu.calpoly.csc305.newsextractor;
 
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
@@ -49,5 +50,15 @@ public class FilteringNewsProcessor implements NewsProcessor {
    */
   public NewsParser getParser() {
     return this.newsProcessor.getParser();
+  }
+
+  /**
+   * Logger getter.
+   *
+   * @return logger.
+   */
+  @Override
+  public Logger getLogger() {
+    return newsProcessor.getLogger();
   }
 }

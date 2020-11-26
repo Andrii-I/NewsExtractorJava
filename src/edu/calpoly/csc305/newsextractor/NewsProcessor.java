@@ -1,6 +1,7 @@
 package edu.calpoly.csc305.newsextractor;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Interface for different types of Processor-s.
@@ -27,4 +28,11 @@ public interface NewsProcessor {
    * @return parser.
    */
   NewsParser getParser();
+
+  /**
+   * Logger getter.
+   *
+   * @return logger.
+   */
+  Logger getLogger();
 }
