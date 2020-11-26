@@ -1,7 +1,6 @@
 package edu.calpoly.csc305.newsextractor.config.visitors;
 
 import edu.calpoly.csc305.newsextractor.Article;
-import edu.calpoly.csc305.newsextractor.NewsProcessor;
 import edu.calpoly.csc305.newsextractor.ProcessorScheduler;
 import edu.calpoly.csc305.newsextractor.config.grammars.AggregatorConfigParser;
 import edu.calpoly.csc305.newsextractor.config.grammars.AggregatorConfigParserBaseVisitor;
@@ -15,12 +14,12 @@ import java.util.logging.Logger;
 /**
  * Extracts list of NewsProcessors.
  */
-public class AggregatorProcessorListVisitor
+public class AggregatorProcessorSchedulerListVisitor
     extends AggregatorConfigParserBaseVisitor<List<ProcessorScheduler>> {
   private final Logger logger;
   private final BlockingQueue<Article> queue;
 
-  public AggregatorProcessorListVisitor(Logger logger, BlockingQueue<Article> queue) {
+  public AggregatorProcessorSchedulerListVisitor(Logger logger, BlockingQueue<Article> queue) {
     this.logger = logger;
     this.queue = queue;
   }

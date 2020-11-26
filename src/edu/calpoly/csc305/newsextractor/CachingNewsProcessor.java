@@ -37,7 +37,7 @@ public class CachingNewsProcessor implements NewsProcessor {
   public List<Article> getArticles() {
     List<Article> articles = newsProcessor.getArticles();
     List<Article> filteredArticles = articles.stream().filter(Predicate.not(cache::contains))
-      .collect(Collectors.toList());
+        .collect(Collectors.toList());
     updateCache(articles);
 
     return filteredArticles;
@@ -61,7 +61,7 @@ public class CachingNewsProcessor implements NewsProcessor {
     }
     LocalDateTime earliestInBatch = LocalDateTime.MAX;
     for (Article article : articles) {
-      if (article.getPublishedAt().isBefore(earliestInBatch) ) {
+      if (article.getPublishedAt().isBefore(earliestInBatch)) {
         earliestInBatch = article.getPublishedAt();
       }
     }

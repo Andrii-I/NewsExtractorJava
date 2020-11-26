@@ -2,7 +2,7 @@ package edu.calpoly.csc305.newsextractor;
 
 import edu.calpoly.csc305.newsextractor.config.grammars.AggregatorConfigLexer;
 import edu.calpoly.csc305.newsextractor.config.grammars.AggregatorConfigParser;
-import edu.calpoly.csc305.newsextractor.config.visitors.AggregatorProcessorListVisitor;
+import edu.calpoly.csc305.newsextractor.config.visitors.AggregatorProcessorSchedulerListVisitor;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
@@ -42,7 +42,7 @@ public class NewsConfigParser implements ConfigParser {
   public List<ProcessorScheduler> getProcessors() {
     Optional<ParseTree> parseTree = parseFile(configFilePath, logger);
     if (parseTree.isPresent()) {
-      return parseTree.get().accept(new AggregatorProcessorListVisitor(logger, queue));
+      return parseTree.get().accept(new AggregatorProcessorSchedulerListVisitor(logger, queue));
     }
     return new LinkedList<>();
   }

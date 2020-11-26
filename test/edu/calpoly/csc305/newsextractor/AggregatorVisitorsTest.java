@@ -2,13 +2,12 @@ package edu.calpoly.csc305.newsextractor;
 
 import edu.calpoly.csc305.newsextractor.config.grammars.AggregatorConfigLexer;
 import edu.calpoly.csc305.newsextractor.config.grammars.AggregatorConfigParser;
-import edu.calpoly.csc305.newsextractor.config.visitors.AggregatorProcessorListVisitor;
+import edu.calpoly.csc305.newsextractor.config.visitors.AggregatorProcessorSchedulerListVisitor;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.PriorityQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Logger;
@@ -46,7 +45,7 @@ class AggregatorVisitorsTest {
         new CommonTokenStream(new AggregatorConfigLexer(CharStreams.fromString(config.toString())));
     AggregatorConfigParser parser = new AggregatorConfigParser(tokens);
     List<ProcessorScheduler> processors =
-        parser.sources().accept(new AggregatorProcessorListVisitor(logger, queue));
+        parser.sources().accept(new AggregatorProcessorSchedulerListVisitor(logger, queue));
 
 /*    assertEquals(3, processors.size());
 

@@ -38,12 +38,12 @@ public class ConfigParserDriver {
     }
 
     ScheduledExecutorService executor = Executors.newScheduledThreadPool(
-      Runtime.getRuntime().availableProcessors() * 10);
+        Runtime.getRuntime().availableProcessors() * 10);
 
     for (ProcessorScheduler scheduler : processorsSchedulers) {
       if (scheduler.getDelay() != 0) {
         executor.scheduleWithFixedDelay(scheduler, 0, scheduler.getDelay().longValue(),
-          TimeUnit.SECONDS);
+            TimeUnit.SECONDS);
       } else {
         scheduler.run();
       }

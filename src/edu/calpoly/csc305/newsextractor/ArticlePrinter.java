@@ -1,8 +1,5 @@
 package edu.calpoly.csc305.newsextractor;
 
-import edu.calpoly.csc305.newsextractor.Article;
-
-import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.logging.Logger;
 
@@ -34,11 +31,10 @@ public class ArticlePrinter implements Runnable {
    * section after the interruption and the function will terminate naturally; also because
    * SonarLint suggested it. Also I have spent some time researching online and this way is
    * considered appropriate accordingly to it.
-   * @see Thread#run()
    */
   @Override
   public void run() {
-    while(!Thread.interrupted()) {
+    while (!Thread.interrupted()) {
       try {
         printArticle(queue.take());
       } catch (InterruptedException e) {
