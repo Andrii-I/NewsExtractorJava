@@ -1,18 +1,18 @@
 package edu.calpoly.csc305.newsextractor;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import edu.calpoly.csc305.newsextractor.config.grammars.AggregatorConfigLexer;
 import edu.calpoly.csc305.newsextractor.config.grammars.AggregatorConfigParser;
 import edu.calpoly.csc305.newsextractor.config.visitors.AggregatorProcessorSchedulerListVisitor;
-import org.antlr.v4.runtime.CharStreams;
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.junit.jupiter.api.Test;
-
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Logger;
+import org.antlr.v4.runtime.CharStreams;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Tests Aggregator Visitors.
@@ -47,16 +47,7 @@ class AggregatorVisitorsTest {
     List<ProcessorScheduler> processors =
         parser.sources().accept(new AggregatorProcessorSchedulerListVisitor(logger, queue));
 
-/*    assertEquals(3, processors.size());
-
-    assertEquals(FileNewsSource.class, processors.get(0).getSource().getClass());
-    assertEquals(StandardOrgJsonNewsParser.class, processors.get(0).getParser().getClass());
-
-    assertEquals(UrlNewsSource.class, processors.get(1).getSource().getClass());
-    assertEquals(StandardOrgJsonNewsParser.class, processors.get(1).getParser().getClass());
-
-    assertEquals(FileNewsSource.class, processors.get(2).getSource().getClass());
-    assertEquals(SimpleOrgJsonNewsParser.class, processors.get(2).getParser().getClass());*/
+    assertEquals(3, processors.size());
   }
 
   /**
@@ -68,14 +59,14 @@ class AggregatorVisitorsTest {
     logger.setUseParentHandlers(false);
     CustomHandler handler = new CustomHandler();
     logger.addHandler(handler);
+    BlockingQueue<Article> queue = new LinkedBlockingQueue<>();
 
-    String config = new String();
     CommonTokenStream tokens =
-        new CommonTokenStream(new AggregatorConfigLexer(CharStreams.fromString(config)));
+        new CommonTokenStream(new AggregatorConfigLexer(CharStreams.fromString(new String())));
     AggregatorConfigParser parser = new AggregatorConfigParser(tokens);
-/*    List<NewsProcessor> processors =
-        parser.sources().accept(new AggregatorProcessorListVisitor(logger));
+    List<ProcessorScheduler> processors =
+        parser.sources().accept(new AggregatorProcessorSchedulerListVisitor(logger, queue));
 
-    assertEquals(0, processors.size());*/
+    assertEquals(0, processors.size());
   }
 }

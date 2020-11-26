@@ -1,8 +1,8 @@
 package edu.calpoly.csc305.newsextractor;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
  */
 public class CachingNewsProcessor implements NewsProcessor {
   private final NewsProcessor newsProcessor;
-  private final HashSet<Article> cache;
+  private final LinkedList<Article> cache;
 
   /**
    * Creates an instance of Cached News Processor.
@@ -22,7 +22,7 @@ public class CachingNewsProcessor implements NewsProcessor {
    */
   public CachingNewsProcessor(NewsProcessor newsProcessor) {
     this.newsProcessor = newsProcessor;
-    this.cache = new HashSet<>();
+    this.cache = new LinkedList<>();
   }
 
   /**

@@ -86,12 +86,25 @@ public class GeneralArticle implements Article {
     if (!(o instanceof GeneralArticle)) {
       return false;
     }
-    GeneralArticle article = (GeneralArticle)o;
+    GeneralArticle article = (GeneralArticle) o;
 
-    return this.getDescription().equals(article.getDescription()) &&
-      this.getPublishedAt().equals(article.getPublishedAt()) &&
-      this.getTitle().equals(article.getTitle()) &&
-      this.getUrl().toString().equals(article.getUrl().toString());
+    return this.getDescription().equals(article.getDescription())
+      && this.getPublishedAt().equals(article.getPublishedAt())
+      && this.getTitle().equals(article.getTitle())
+      && this.getUrl().toString().equals(article.getUrl().toString());
+  }
+
+  /**
+   * Overrides a hash code.
+   *
+   * @return returns a hash for this object.
+   */
+  @Override
+  public int hashCode() {
+    return this.getDescription().hashCode()
+      + this.getPublishedAt().hashCode()
+      + this.getTitle().hashCode()
+      + this.getUrl().toString().hashCode();
   }
 
 }
